@@ -17,7 +17,7 @@ namespace Day09
         {
             List<Location> locations = GetLocations(input);
 
-            List<List<Location>> locationPermutations = GetPermutations(locations, locations.Count)
+            List<List<Location>> locationPermutations = GetPermutations(locations)
                 .Select(l => l.ToList())
                 .ToList();
 
@@ -75,13 +75,14 @@ namespace Day09
             return locations;
         }
 
-        public static IEnumerable<IEnumerable<T>> GetPermutations<T>(IEnumerable<T> list, int length)
+        public static IEnumerable<IEnumerable<T>> GetPermutations<T>(IEnumerable<T> items)
         {
-            if (length == 1) return list.Select(t => new T[] { t });
+            if (items.Count() > 1)
+                return items.SelectMany(
+                     item => GetPermutations(items.Where(i => !i.Equals(item))),
+                     (item, permutation) => new[] { item }.Concat(permutation));
 
-            return GetPermutations(list, length - 1)
-                .SelectMany(t => list.Where(e => !t.Contains(e)),
-                    (t1, t2) => t1.Concat(new T[] { t2 }));
+            return new[] { items };
         }
     }
 }
