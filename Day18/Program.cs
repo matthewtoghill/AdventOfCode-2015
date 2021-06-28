@@ -28,16 +28,16 @@ namespace Day18
             // Set grid to initial state
             currentLightGrid = input.ToArray();
 
+            // Get max row and columns from array lengths
+            maxRows = currentLightGrid.Length;
+            maxCols = currentLightGrid[0].Length;
+
             // Set corner lights as ON if required
             if (cornersAlwaysOn)
             {
                 currentLightGrid[0] = currentLightGrid[0].ReplaceAtIndex(0, '#').ReplaceAtIndex(maxCols - 1, '#');
                 currentLightGrid[maxRows - 1] = currentLightGrid[maxRows - 1].ReplaceAtIndex(0, '#').ReplaceAtIndex(maxCols - 1, '#');
             }
-
-            // Get max row and columns from array lengths
-            maxRows = currentLightGrid.Length;
-            maxCols = currentLightGrid[0].Length;
 
             // Run the Light Grid changes the required number of steps
             for (int i = 0; i < steps; i++)
